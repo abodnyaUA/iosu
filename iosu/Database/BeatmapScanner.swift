@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Zip
 
 class BeatmapScanner {
     
@@ -24,7 +25,19 @@ class BeatmapScanner {
         }
         for entry in contentsOfPath {
             let entryURL = documentsURL.appendingPathComponent(entry)
-            guard let contentsOfBMPath = try? manager.contentsOfDirectory(atPath: entryURL.path) else {
+            let songFolderURL = entryURL.deletingPathExtension()
+            if entryURL.pathExtension == "osz" {
+                let zipURL = songFolderURL.appendingPathExtension("zip")
+                do {
+                    try manager.moveItem(atPath: entryURL.path, toPath: zipURL.path)
+                    try Zip.unzipFile(zipURL, destination: songFolderURL, overwrite: true, password: nil)
+                    try manager.removeItem(at: zipURL)
+                } catch let error {
+                    print("error unpacking \(entry): \(error)")
+                    continue
+                }
+            }
+            guard let contentsOfBMPath = try? manager.contentsOfDirectory(atPath: songFolderURL.path) else {
                 continue
             }
             for subentry in contentsOfBMPath {

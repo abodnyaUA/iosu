@@ -5,4 +5,5 @@ target "iosu" do
 	pod 'SpriteKitEasingSwift', :git => 'https://github.com/imxieyi/SpriteKitEasingSwift.git'
 	pod 'MobileVLCKit'
 	pod 'SQLite.swift'
+    pod 'Zip', '~> 1.1'
 end
