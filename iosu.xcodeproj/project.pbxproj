@@ -17,12 +17,10 @@
 		8A51BA4720285C520035BC82 /* BeatmapLibrary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A51BA4620285C520035BC82 /* BeatmapLibrary.storyboard */; };
 		8A67438B1E9011D800818D55 /* SpriteKitEasingSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A67438A1E9011D800818D55 /* SpriteKitEasingSwift.framework */; };
 		8A7F7E191E9D2C1000595A13 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A7F7E181E9D2C1000595A13 /* VideoToolbox.framework */; };
-		8A7F7E1B1E9D2C1D00595A13 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A7F7E1A1E9D2C1D00595A13 /* libstdc++.6.tbd */; };
 		8A7F7E1D1E9D2C2500595A13 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A7F7E1C1E9D2C2500595A13 /* libbz2.tbd */; };
 		8A7F7E1F1E9D2C2D00595A13 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A7F7E1E1E9D2C2D00595A13 /* libz.tbd */; };
 		8AA5593B1F06AF0400C77AE5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AA5593A1F06AF0400C77AE5 /* libiconv.tbd */; };
 		8AA559AC1F06B1D200C77AE5 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AA559A11F06B18C00C77AE5 /* MobileVLCKit.framework */; };
-		8AA559AE1F06B1DA00C77AE5 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AA559AD1F06B1DA00C77AE5 /* libstdc++.6.0.9.tbd */; };
 		8ADC1E0D1ECB0B1B00E0E9AB /* applause.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8ADC1DE81ECB0B1B00E0E9AB /* applause.mp3 */; };
 		8ADC1E0E1ECB0B1B00E0E9AB /* combobreak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8ADC1DE91ECB0B1B00E0E9AB /* combobreak.mp3 */; };
 		8ADC1E0F1ECB0B1B00E0E9AB /* count.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8ADC1DEA1ECB0B1B00E0E9AB /* count.wav */; };
@@ -322,12 +320,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AA559AE1F06B1DA00C77AE5 /* libstdc++.6.0.9.tbd in Frameworks */,
 				8AA559AC1F06B1D200C77AE5 /* MobileVLCKit.framework in Frameworks */,
 				8AA5593B1F06AF0400C77AE5 /* libiconv.tbd in Frameworks */,
 				8A7F7E1F1E9D2C2D00595A13 /* libz.tbd in Frameworks */,
 				8A7F7E1D1E9D2C2500595A13 /* libbz2.tbd in Frameworks */,
-				8A7F7E1B1E9D2C1D00595A13 /* libstdc++.6.tbd in Frameworks */,
 				8A7F7E191E9D2C1000595A13 /* VideoToolbox.framework in Frameworks */,
 				8A67438B1E9011D800818D55 /* SpriteKitEasingSwift.framework in Frameworks */,
 				99B4058382CF96D791075AB4 /* Pods_iosu.framework in Frameworks */,
@@ -960,7 +956,6 @@
 				8A4D5C2D1E8A8AEB00319D91 /* Frameworks */,
 				8A4D5C2E1E8A8AEB00319D91 /* Resources */,
 				76C8BBFD8412E2A640B938C0 /* [CP] Embed Pods Frameworks */,
-				0B93C120F14D6C1714DCD1EE /* [CP] Copy Pods Resources */,
 				8AAFCE52202735C6002D90CF /* ShellScript */,
 			);
 			buildRules = (
@@ -1090,21 +1085,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0B93C120F14D6C1714DCD1EE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosu/Pods-iosu-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		76C8BBFD8412E2A640B938C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1247,7 +1227,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1302,7 +1282,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;

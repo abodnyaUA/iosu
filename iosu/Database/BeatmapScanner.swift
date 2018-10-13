@@ -8,55 +8,44 @@
 
 import Foundation
 
-class BeatmapScanner{
+class BeatmapScanner {
     
-    //var docPath:NSString
-    open var beatmapdirs:[String]=[]
-    open var bmdirurls:[URL]=[]
-    open var beatmaps:[String]=[]
-    open var storyboards=[String:String]()
-    open var dirscontainsb:[String]=[]
+    public var beatmapdirs = [String]()
+    public var bmdirurls = [URL]()
+    public var beatmaps = [String]()
+    public var storyboards = [String:String]()
+    public var dirscontainsb = [String]()
     
     init() {
-        //let home=NSHomeDirectory() as NSString
-        //docPath=home.strings(byAppendingPaths: "Documents")
-        let manager=FileManager.default
-        let docURL=manager.urls(for: .documentDirectory, in: .userDomainMask)
-        let url=docURL[0] as URL
-        let contentsOfPath=try? manager.contentsOfDirectory(atPath: url.path)
-        for entry in contentsOfPath!{
-            //debugPrint("folder:\(entry)")
-            let contentsOfBMPath=try? manager.contentsOfDirectory(atPath: url.appendingPathComponent(entry).path)
-            if contentsOfBMPath == nil {
+        let manager = FileManager.default
+        let documentsURL = manager.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
+        guard let contentsOfPath = try? manager.contentsOfDirectory(atPath: documentsURL.path) else {
+            return
+        }
+        for entry in contentsOfPath {
+            let entryURL = documentsURL.appendingPathComponent(entry)
+            guard let contentsOfBMPath = try? manager.contentsOfDirectory(atPath: entryURL.path) else {
                 continue
             }
-            for subentry in contentsOfBMPath!{
-                //debugPrint("       \(subentry)")
-                if subentry.hasSuffix(".osu"){
-                    let fullpath=url.appendingPathComponent(entry, isDirectory: true)
-                    beatmapdirs.append(fullpath.path)
-                    bmdirurls.append(fullpath)
-                    //fullpath=fullpath.appendingPathComponent(subentry, isDirectory: false)
-                    //beatmaps.append(fullpath.path)
+            for subentry in contentsOfBMPath {
+                if subentry.hasSuffix(".osu") {
+                    beatmapdirs.append(entryURL.path)
+                    bmdirurls.append(entryURL)
                     beatmaps.append(subentry)
                 }
-                if subentry.hasSuffix(".osb"){
-                    let fullpath=url.appendingPathComponent(entry, isDirectory: true)
-                    //beatmapdirs.append(fullpath.path)
-                    //fullpath=fullpath.appendingPathComponent(subentry, isDirectory: false)
-                    //beatmaps.append(fullpath.path)
-                    dirscontainsb.append(fullpath.path)
-                    storyboards.updateValue(subentry, forKey: fullpath.path)
+                if subentry.hasSuffix(".osb") {
+                    dirscontainsb.append(entryURL.path)
+                    storyboards.updateValue(subentry, forKey: entryURL.path)
                 }
             }
         }
     }
     
-    func count()->Int{
+    func count() -> Int {
         return beatmaps.count
     }
     
-    func get(index:Int)->String{
+    func get(index:Int) -> String {
         return beatmaps[index]
     }
     

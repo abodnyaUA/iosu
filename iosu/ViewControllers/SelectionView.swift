@@ -25,12 +25,12 @@ class SelectionViewController:UIViewController,UIPickerViewDelegate,UIPickerView
     
     @IBOutlet var skinSwitch: UISwitch!
     
-    let bs=BeatmapScanner()
+    let bs = BeatmapScanner()
     
     override func viewDidLoad() {
-        picker.dataSource=self
-        picker.delegate=self
-        UIApplication.shared.isIdleTimerDisabled=true
+        picker.dataSource = self
+        picker.delegate = self
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -44,18 +44,18 @@ class SelectionViewController:UIViewController,UIPickerViewDelegate,UIPickerView
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return bs.beatmaps[row]
     }
-
+    
     @IBAction func playPressed(_ sender: Any) {
         SkinBuffer.bmPath = bs.beatmapdirs[picker.selectedRow(inComponent: 0)]
         SkinBuffer.useSkin = skinSwitch.isOn
         GamePlayScene.testBMIndex = picker.selectedRow(inComponent: 0)
         StoryBoardScene.testBMIndex = picker.selectedRow(inComponent: 0)
-        GamePlayScene.bgdim = Double(dimSlider.value)/100
+        GamePlayScene.bgdim = Double(dimSlider.value) / 100.0
         GameViewController.showgame = gameSwitch.isOn
         GameViewController.showvideo = videoSwitch.isOn
         GameViewController.showsb = sbSwitch.isOn
-        BGMusicPlayer.instance.bgmvolume = musicSlider.value/100
-        GamePlayScene.effvolume = effectSlider.value/100
+        BGMusicPlayer.instance.bgmvolume = musicSlider.value / 100.0
+        GamePlayScene.effvolume = effectSlider.value / 100.0
         self.performSegue(withIdentifier: "play", sender: self.view)
     }
     
@@ -73,9 +73,9 @@ class SelectionViewController:UIViewController,UIPickerViewDelegate,UIPickerView
     
     @IBAction func gameSwitched(_ sender: Any) {
         if !sbSwitch.isOn && !gameSwitch.isOn {
-            Alerts.show(self, title: "Warning", message: "You should turn on either game or storyboard!", style: .alert, actiontitle: "OK", actionstyle: .default, handler: {(act:UIAlertAction) -> Void in
-                self.gameSwitch.setOn(true, animated: true)
-                self.skinSwitch.isEnabled = true
+            Alerts.show(self, title: "Warning", message: "You should turn on either game or storyboard!", style: .alert, actiontitle: "OK", actionstyle: .default, handler: { [weak self] _ in
+                self?.gameSwitch.setOn(true, animated: true)
+                self?.skinSwitch.isEnabled = true
             })
         }
         if gameSwitch.isOn {
@@ -86,10 +86,9 @@ class SelectionViewController:UIViewController,UIPickerViewDelegate,UIPickerView
     }
     @IBAction func sbSwitched(_ sender: Any) {
         if !sbSwitch.isOn && !gameSwitch.isOn {
-            Alerts.show(self, title: "Warning", message: "You should turn on either game or storyboard!", style: .alert, actiontitle: "OK", actionstyle: .default, handler: {(act:UIAlertAction) -> Void in
-                self.sbSwitch.setOn(true, animated: true)
+            Alerts.show(self, title: "Warning", message: "You should turn on either game or storyboard!", style: .alert, actiontitle: "OK", actionstyle: .default, handler: { [weak self] _ in
+                self?.sbSwitch.setOn(true, animated: true)
             })
         }
     }
-    
 }
