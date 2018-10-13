@@ -34,19 +34,19 @@ class GamePlayScene: SKScene {
     fileprivate var bgvactions:[SKAction]=[]
     fileprivate var bgvtimes:[Int]=[]
     
-    open static var sliderball:SliderBall?
+    static var sliderball: SliderBall?
     var bm:Beatmap?
     
     override func sceneDidLoad() {
         GamePlayScene.current = self
-        GamePlayScene.sliderball=SliderBall(scene: self)
-        GamePlayScene.scrscale=Double(size.height)/480.0
-        GamePlayScene.realwidth=512.0*GamePlayScene.scrscale
-        GamePlayScene.realheight=384.0*GamePlayScene.scrscale
-        GamePlayScene.scrwidth=Double(size.width)
-        GamePlayScene.scrheight=Double(size.height)
-        GamePlayScene.bottomedge=(Double(size.height)-GamePlayScene.realheight)/2
-        GamePlayScene.leftedge=(Double(size.width)-GamePlayScene.realwidth)/2
+        GamePlayScene.sliderball = SliderBall(scene: self)
+        GamePlayScene.scrscale = Double(size.height) / 480.0
+        GamePlayScene.realwidth = 512.0 * GamePlayScene.scrscale
+        GamePlayScene.realheight = 384.0 * GamePlayScene.scrscale
+        GamePlayScene.scrwidth = Double(size.width)
+        GamePlayScene.scrheight = Double(size.height)
+        GamePlayScene.bottomedge = (Double(size.height) - GamePlayScene.realheight) / 2
+        GamePlayScene.leftedge = (Double(size.width) - GamePlayScene.realwidth) / 2
         let beatmaps=BeatmapScanner()
         debugPrint("test beatmap:\(beatmaps.beatmaps[GamePlayScene.testBMIndex])")
         debugPrint("Enter GamePlayScene, screen size: \(size.width)*\(size.height)")
@@ -56,7 +56,7 @@ class GamePlayScene: SKScene {
         debugPrint("bottomedge:\(GamePlayScene.bottomedge)")
         debugPrint("leftedge:\(GamePlayScene.leftedge)")
         do{
-            bm=try Beatmap(file: (beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[GamePlayScene.testBMIndex]])[0])
+            bm = try Beatmap(file: (beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[GamePlayScene.testBMIndex]])[0])
             if (bm?.bgvideos.count)! > 0 && GameViewController.showvideo {
                 debugPrint("got \(String(describing: bm?.bgvideos.count)) videos")
                 for i in 0...(bm?.bgvideos.count)!-1 {
@@ -84,24 +84,24 @@ class GamePlayScene: SKScene {
                     addChild(bgnode)
                 }
             }
-            let dimnode=SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let dimnode = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: size.height))
             dimnode.fillColor = .black
-            dimnode.alpha=CGFloat(GamePlayScene.bgdim)
-            dimnode.zPosition=1
+            dimnode.alpha = CGFloat(GamePlayScene.bgdim)
+            dimnode.zPosition = 1
             addChild(dimnode)
             switch (bm?.sampleSet)! {
             case .auto:
                 //Likely to be an error
-                hitaudioHeader="normal-"
+                hitaudioHeader = "normal-"
                 break
             case .normal:
-                hitaudioHeader="normal-"
+                hitaudioHeader = "normal-"
                 break
             case .soft:
-                hitaudioHeader="soft-"
+                hitaudioHeader = "soft-"
                 break
             case .drum:
-                hitaudioHeader="drum-"
+                hitaudioHeader = "drum-"
                 break
             }
             debugPrint("bgimg:\(String(describing: bm?.bgimg))")
@@ -110,7 +110,7 @@ class GamePlayScene: SKScene {
             debugPrint("timingpoints: \(String(describing: bm?.timingpoints.count))")
             debugPrint("hitobjects: \(String(describing: bm?.hitobjects.count))")
             debugPrint("hitsoundset: \(hitaudioHeader)")
-            bm?.audiofile=(beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [(bm?.audiofile)!])[0] as String
+            bm?.audiofile = (beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [(bm?.audiofile)!])[0] as String
             if !FileManager.default.fileExists(atPath: (bm?.audiofile)!){
                 throw BeatmapError.audioFileNotExist
             }
@@ -119,7 +119,7 @@ class GamePlayScene: SKScene {
             BGMusicPlayer.instance.gameScene = self
             BGMusicPlayer.instance.gameEarliest = Int((actions?.nexttime())!) - Int((bm?.difficulty?.ARTime)!)
             BGMusicPlayer.instance.setfile((bm?.audiofile)!)
-            if bgvtimes.count>0 {
+            if bgvtimes.count > 0 {
                 BGMusicPlayer.instance.videoEarliest = bgvtimes.first!
             }
         } catch BeatmapError.fileNotFound {
@@ -139,23 +139,23 @@ class GamePlayScene: SKScene {
         }
     }
     
-    static func conv(x:Double) -> Double {
-        return leftedge+x*scrscale
+    static func conv(x: Double) -> Double {
+        return leftedge + x * scrscale
     }
     
-    static func conv(y:Double) -> Double {
-        return scrheight-bottomedge-y*scrscale
+    static func conv(y: Double) -> Double {
+        return scrheight - bottomedge - y * scrscale
     }
     
-    static func conv(w:Double) -> Double {
-        return w*scrscale
+    static func conv(w: Double) -> Double {
+        return w * scrscale
     }
     
-    static func conv(h:Double) -> Double {
-        return h*scrscale
+    static func conv(h: Double) -> Double {
+        return h * scrscale
     }
     
-    func showresult(x:CGFloat,y:CGFloat,result:HitResult,audio:String) {
+    func showresult(x: CGFloat, y: CGFloat, result: HitResult, audio: String) {
         var img:SKTexture
         switch result {
         case .s300:
@@ -187,7 +187,7 @@ class GamePlayScene: SKScene {
         node.run(.group([.sequence([.fadeIn(withDuration: 0.2),.fadeOut(withDuration: 0.6)]),.sequence([.scale(by: 1.5, duration: 0.1),.scale(to: scale, duration: 0.1)])]))
     }
     
-    func hitsound2str(hitsound:HitSound) -> String {
+    func hitsound2str(hitsound: HitSound) -> String {
         switch hitsound {
         case .normal:
             return "hitnormal.wav"
@@ -200,16 +200,16 @@ class GamePlayScene: SKScene {
         }
     }
     
-    func distance(x1:CGFloat,y1:CGFloat,x2:CGFloat,y2:CGFloat) -> CGFloat {
-        return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2))
+    func distance(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat {
+        return sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2))
     }
     
     //Slider Status
     private var onslider = false
     private var hastouch = false
-    private var lastpoint:CGPoint = .zero
+    private var lastpoint: CGPoint = .zero
     
-    fileprivate func updateslider(_ time:Double) {
+    fileprivate func updateslider(_ time: Double) {
         let act = actions?.currentact()
         if act?.getobj().type != .slider {
             return
@@ -287,7 +287,7 @@ class GamePlayScene: SKScene {
         }
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
+    func touchMoved(toPoint pos: CGPoint) {
         let act = actions?.currentact()
         if act == nil {
             return
@@ -298,7 +298,7 @@ class GamePlayScene: SKScene {
         }
     }
     
-    func touchUp(atPoint pos : CGPoint) {
+    func touchUp(atPoint pos: CGPoint) {
         hastouch = false
         GamePlayScene.sliderball?.hidefollowcircle()
         let act = actions?.currentact()
@@ -325,7 +325,7 @@ class GamePlayScene: SKScene {
     }
     
     var bgvindex = 0
-    var firstrun=true
+    var firstrun = true
     let dispatcher = DispatchQueue(label: "bm_dispatcher")
     
     func destroyNode(_ node: SKNode) {
@@ -351,23 +351,23 @@ class GamePlayScene: SKScene {
             actions = nil
             SkinBuffer.clean()
         }
-        let mtime=BGMusicPlayer.instance.getTime()*1000
+        let mtime = BGMusicPlayer.instance.getTime()*1000
         if self.bgvindex < self.bgvactions.count {
             if self.bgvtimes[self.bgvindex] - Int(mtime) < 1000 {
-                var offset=self.bgvtimes[self.bgvindex] - Int(mtime)
-                if offset<0 {
-                    offset=0
+                var offset = self.bgvtimes[self.bgvindex] - Int(mtime)
+                if offset < 0 {
+                    offset = 0
                 }
                 debugPrint("push bgvideo \(self.bgvindex) with offset \(offset)")
                 self.run(SKAction.group([self.bgvactions[self.bgvindex],SKAction.sequence([SKAction.wait(forDuration: Double(offset)/1000),BGVPlayer.play()])]))
-                self.bgvindex+=1
+                self.bgvindex += 1
             }
         }
         dispatcher.async {
             if BGMusicPlayer.instance.state == .stopped {
                 return
             }
-            let mtime=BGMusicPlayer.instance.getTime()*1000
+            let mtime=BGMusicPlayer.instance.getTime() * 1000
             let act = self.actions?.currentact()
             if act != nil {
                 if act?.getobj().type == .slider {

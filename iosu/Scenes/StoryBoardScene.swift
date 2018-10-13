@@ -12,19 +12,19 @@ import GameplayKit
 
 class StoryBoardScene: SKScene {
     
-    var actiontimepoints:[Int] = []
+    var actiontimepoints = [Int]()
     static var testBMIndex = 4 //The index of beatmap to test in the beatmaps
-    var minlayer:CGFloat=0.0
-    var hitaudioHeader:String = "normal-"
+    var minlayer: CGFloat = 0.0
+    var hitaudioHeader: String = "normal-"
     //StoryBoard.stdwidth=854
     var audiofile=""
-    var sb:StoryBoard?
-    open weak var viewController:GameViewController?
-    open static var hasSB = false
+    var sb: StoryBoard?
+    open weak var viewController: GameViewController?
+    static var hasSB = false
     
-    init(size: CGSize,parent:GameViewController) {
+    init(size: CGSize, parent: GameViewController) {
         //debugPrint("enter constructor,parent is \(parent)")
-        self.viewController=parent
+        self.viewController = parent
         super.init(size: size)
     }
     
@@ -34,21 +34,21 @@ class StoryBoardScene: SKScene {
     
     override func sceneDidLoad() {
         self.backgroundColor = .clear
-        let beatmaps=BeatmapScanner()
+        let beatmaps = BeatmapScanner()
         debugPrint("test beatmap:\(beatmaps.beatmaps[StoryBoardScene.testBMIndex])")
         debugPrint("Enter StoryBoardScene, screen size: \(size.width)*\(size.height)")
-        do{
-            let bm=try Beatmap(file: (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0])
+        do {
+            let bm = try Beatmap(file: (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0])
             debugPrint("bgimg:\(bm.bgimg)")
             debugPrint("audio:\(bm.audiofile)")
             debugPrint("colors: \(bm.colors.count)")
             debugPrint("timingpoints: \(bm.timingpoints.count)")
             debugPrint("hitobjects: \(bm.hitobjects.count)")
-            bm.audiofile=(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [bm.audiofile])[0] as String
-            if !FileManager.default.fileExists(atPath: bm.audiofile){
+            bm.audiofile = (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [bm.audiofile])[0] as String
+            if !FileManager.default.fileExists(atPath: bm.audiofile) {
                 throw BeatmapError.audioFileNotExist
             }
-            audiofile=bm.audiofile
+            audiofile = bm.audiofile
         } catch BeatmapError.fileNotFound {
             Alerts.show(viewController!, title: "Error", message: "beatmap file not found", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
             debugPrint("ERROR:beatmap file not found")
@@ -72,8 +72,8 @@ class StoryBoardScene: SKScene {
             debugPrint("ERROR:unknown error(\(error.localizedDescription))")
         }
         if beatmaps.dirscontainsb.contains(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex]) {
-            do{
-                sb=try StoryBoard(directory:beatmaps.beatmapdirs[StoryBoardScene.testBMIndex],osufile:(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0],osbfile: (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).appendingPathComponent(beatmaps.storyboards[beatmaps.beatmapdirs[StoryBoardScene.testBMIndex]]!), width: Double(size.width), height: Double(size.height), layer: 0)
+            do {
+                sb = try StoryBoard(directory:beatmaps.beatmapdirs[StoryBoardScene.testBMIndex],osufile:(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0],osbfile: (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).appendingPathComponent(beatmaps.storyboards[beatmaps.beatmapdirs[StoryBoardScene.testBMIndex]]!), width: Double(size.width), height: Double(size.height), layer: 0)
                 debugPrint("storyboard object count: \(String(describing: sb?.sbsprites.count))")
                 debugPrint("storyboard earliest time: \(String(describing: sb?.earliest))")
                 if (sb?.sbsprites.count)! > 0 {
@@ -87,25 +87,25 @@ class StoryBoardScene: SKScene {
                         BGMusicPlayer.instance.sbScene = self
                         BGMusicPlayer.instance.sbEarliest = (self.sb?.sbsprites.first?.starttime)!
                     })
-                }else{
+                } else {
                     BGMusicPlayer.instance.sbScene = self
                     BGMusicPlayer.instance.sbEarliest = (sb?.sbsprites.first?.starttime)!
                     BGMusicPlayer.instance.setfile(audiofile)
                 }
-            }catch StoryBoardError.fileNotFound{
+            } catch StoryBoardError.fileNotFound {
                 Alerts.show(viewController!, title: "Error", message: "storyboard file not found", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
                 debugPrint("ERROR:storyboard file not found")
-            }catch StoryBoardError.illegalFormat{
+            } catch StoryBoardError.illegalFormat {
                 Alerts.show(viewController!, title: "Error", message: "illegal storyboard format", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
                 debugPrint("ERROR:illegal storyboard format")
-            }catch let error{
+            } catch let error {
                 Alerts.show(viewController!, title: "Error", message: "unknown error(\(error.localizedDescription))", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
                 debugPrint("ERROR:unknown error(\(error.localizedDescription))")
             }
-        }else{
-            do{
+        } else {
+            do {
                 debugPrint(".osb file not found")
-                sb=try StoryBoard(directory:beatmaps.beatmapdirs[StoryBoardScene.testBMIndex],osufile:(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0], width: Double(size.width), height: Double(size.height), layer: 0)
+                sb = try StoryBoard(directory:beatmaps.beatmapdirs[StoryBoardScene.testBMIndex],osufile:(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0], width: Double(size.width), height: Double(size.height), layer: 0)
                 debugPrint("storyboard object count: \(String(describing: sb?.sbsprites.count))")
                 debugPrint("storyboard earliest time: \(String(describing: sb?.earliest))")
                 if (sb?.sbsprites.count)! > 0 {
@@ -118,18 +118,18 @@ class StoryBoardScene: SKScene {
                         BGMusicPlayer.instance.sbScene = self
                         BGMusicPlayer.instance.sbEarliest = (self.sb?.sbsprites.first?.starttime)!
                     })
-                }else{
+                } else {
                     BGMusicPlayer.instance.sbScene = self
                     BGMusicPlayer.instance.sbEarliest = (sb?.sbsprites.first?.starttime)!
                     BGMusicPlayer.instance.setfile(audiofile)
                 }
-            }catch StoryBoardError.fileNotFound{
+            } catch StoryBoardError.fileNotFound {
                 Alerts.show(viewController!, title: "Error", message: "storyboard file not found", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
                 debugPrint("ERROR:storyboard file not found")
-            }catch StoryBoardError.illegalFormat{
+            } catch StoryBoardError.illegalFormat {
                 Alerts.show(viewController!, title: "Error", message: "illegal storyboard format", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
                 debugPrint("ERROR:illegal storyboard format")
-            }catch let error{
+            } catch let error {
                 Alerts.show(viewController!, title: "Error", message: "unknown error(\(error.localizedDescription))", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
                 debugPrint("ERROR:unknown error(\(error.localizedDescription))")
             }
@@ -164,9 +164,9 @@ class StoryBoardScene: SKScene {
             if BGMusicPlayer.instance.state != .stopped {
                 if let sb = self.sb {
                     if self.index<sb.sbsprites.count {
-                        var musictime=Int(BGMusicPlayer.instance.getTime()*1000)
+                        var musictime = Int(BGMusicPlayer.instance.getTime() * 1000)
                         while sb.sbsprites[self.index].starttime - musictime <= 2000 {
-                            var offset=sb.sbsprites[self.index].starttime - musictime
+                            var offset = sb.sbsprites[self.index].starttime - musictime
                             sb.sbsprites[self.index].convertsprite()
                             if offset<0{
                                 offset = 0
@@ -178,11 +178,11 @@ class StoryBoardScene: SKScene {
                             if sb.sbsprites[self.index].actions != nil {
                                 sb.sbsprites[self.index].runaction(offset)
                             }
-                            self.index+=1
-                            if self.index>=sb.sbsprites.count{
+                            self.index += 1
+                            if self.index >= sb.sbsprites.count{
                                 return
                             }
-                            musictime=Int(BGMusicPlayer.instance.getTime()*1000)
+                            musictime=Int(BGMusicPlayer.instance.getTime() * 1000)
                         }
                     }
                 }
