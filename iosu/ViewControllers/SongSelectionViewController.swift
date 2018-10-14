@@ -15,6 +15,8 @@ class SongSelectionViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    private let player = MusicPlayer()
+    
     var selectedSongName = ""
     
     let resultsController: NSFetchedResultsController<SongInfo> = {
@@ -28,6 +30,8 @@ class SongSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
         let nib = UINib(nibName: "SongSelectionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
         
@@ -37,6 +41,16 @@ class SongSelectionViewController: UIViewController {
         } else {
             NotificationCenter.default.addObserver(self, selector: #selector(databaseLoaded), name: .loadingDatabaseCompleted, object: nil)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        player.play()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        player.stop()
     }
     
     deinit {
@@ -54,15 +68,22 @@ class SongSelectionViewController: UIViewController {
     }
     
     func startGameForSong(_ song: SongInfo) {
-        guard let file = song.files?.anyObject() as? BeatmapFile else {
+        guard let files = song.files?.map({ $0 as! BeatmapFile }), files.count > 0 else {
             return
         }
+        let file = files.sorted { (file1, file2) -> Bool in
+            return file1.difficulty < file2.difficulty
+        }.first!
         let viewController = GameViewController.create(songInfo: song, beatmapFile: file)
-        present(viewController, animated: false, completion: nil)
+        navigationController?.pushViewController(viewController, animated: false)
     }
     
     func startPlayingMusic(_ song: SongInfo) {
-        
+        if let url = song.musicURL {
+            player.loadFile(url.path)
+            player.rewind(at: 30.0)
+            player.play()
+        }
     }
 }
 
@@ -80,11 +101,13 @@ extension SongSelectionViewController: UITableViewDelegate {
         let songInfo = resultsController.fetchedObjects![indexPath.row]
         if selectedSongName == songInfo.folderName {
             // second selection
+            SoundPlayer.instance.playSound(.menuHit)
             startGameForSong(songInfo)
         } else {
             selectedSongName = songInfo.folderName ?? ""
             backgroundImageView.image = songInfo.backgroundImage
             startPlayingMusic(songInfo)
+            SoundPlayer.instance.playSound(.menuClick)
             
             tableView.reloadData()
         }

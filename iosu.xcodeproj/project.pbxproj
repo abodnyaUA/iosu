@@ -17,6 +17,8 @@
 		79EAF3D321738D0D00828B0D /* SongSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3D121738D0D00828B0D /* SongSelectionCell.swift */; };
 		79EAF3D421738D0D00828B0D /* SongSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EAF3D221738D0D00828B0D /* SongSelectionCell.xib */; };
 		79EAF3D82173C3E300828B0D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3D72173C3E300828B0D /* Settings.swift */; };
+		79EAF3DA2173C9CF00828B0D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3D92173C9CF00828B0D /* SoundPlayer.swift */; };
+		79EAF3DE2173CDE700828B0D /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3DD2173CDE700828B0D /* MusicPlayer.swift */; };
 		8A0442B31ECB2227000DE269 /* UIBezierPath+Length.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */; };
 		8A1ACE721EFAB529000EBC14 /* PlaySoundFileNamedExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE711EFAB529000EBC14 /* PlaySoundFileNamedExt.swift */; };
 		8A1ACE741EFAB985000EBC14 /* BundleAudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE731EFAB985000EBC14 /* BundleAudioBuffer.swift */; };
@@ -160,6 +162,8 @@
 		79EAF3D121738D0D00828B0D /* SongSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionCell.swift; sourceTree = "<group>"; };
 		79EAF3D221738D0D00828B0D /* SongSelectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SongSelectionCell.xib; sourceTree = "<group>"; };
 		79EAF3D72173C3E300828B0D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		79EAF3D92173C9CF00828B0D /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		79EAF3DD2173CDE700828B0D /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		8A0442A81ECB1D0B000DE269 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = "../../Library/Developer/Xcode/DerivedData/iosu-gddpvylvaevfhyenmhqlpckshyiw/Build/Products/Debug-iphoneos/SQLite.swift/SQLite.framework"; sourceTree = "<group>"; };
 		8A0442AF1ECB2227000DE269 /* UIBezierPath+Length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Length.h"; sourceTree = "<group>"; };
 		8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Length.m"; sourceTree = "<group>"; };
@@ -926,6 +930,8 @@
 				8ADC1E9B1ECB163300E0E9AB /* BGMusicPlayer.swift */,
 				8ADC1E9C1ECB163300E0E9AB /* BGVideoPlayer.swift */,
 				8A1ACE731EFAB985000EBC14 /* BundleAudioBuffer.swift */,
+				79EAF3D92173C9CF00828B0D /* SoundPlayer.swift */,
+				79EAF3DD2173CDE700828B0D /* MusicPlayer.swift */,
 			);
 			name = MediaPlayers;
 			sourceTree = "<group>";
@@ -1216,6 +1222,8 @@
 				8ADC1E991ECB15F100E0E9AB /* TestScene.swift in Sources */,
 				8ADC1E531ECB0ECE00E0E9AB /* BundleImageBuffer.swift in Sources */,
 				8ADC1E7E1ECB130D00E0E9AB /* SBRotate.swift in Sources */,
+				79EAF3DA2173C9CF00828B0D /* SoundPlayer.swift in Sources */,
+				79EAF3DE2173CDE700828B0D /* MusicPlayer.swift in Sources */,
 				8A1ACE721EFAB529000EBC14 /* PlaySoundFileNamedExt.swift in Sources */,
 				79EAF3BD21736CF000828B0D /* Database.xcdatamodeld in Sources */,
 				8ADC1E631ECB10B900E0E9AB /* StoryBoardEnums.swift in Sources */,

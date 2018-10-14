@@ -93,6 +93,7 @@ class StoryBoardScene: SKScene {
                 if (sb?.sbsprites.count)! > 0 {
                     StoryBoardScene.hasSB = true
                 } else {
+                    StoryBoardScene.hasSB = false
                     return
                 }
                 if !ImageBuffer.notfoundimages.isEmpty {
@@ -104,7 +105,7 @@ class StoryBoardScene: SKScene {
                 } else {
                     BGMusicPlayer.instance.sbScene = self
                     BGMusicPlayer.instance.sbEarliest = (sb?.sbsprites.first?.starttime)!
-                    BGMusicPlayer.instance.setfile(audiofile)
+                    BGMusicPlayer.instance.loadFile(audiofile)
                 }
             } catch StoryBoardError.fileNotFound {
                 Alerts.show(viewController!, title: "Error", message: "storyboard file not found", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
@@ -131,6 +132,7 @@ class StoryBoardScene: SKScene {
                 if (sb?.sbsprites.count)! > 0 {
                     StoryBoardScene.hasSB = true
                 } else {
+                    StoryBoardScene.hasSB = false
                     return
                 }
                 if !ImageBuffer.notfoundimages.isEmpty {
@@ -141,7 +143,7 @@ class StoryBoardScene: SKScene {
                 } else {
                     BGMusicPlayer.instance.sbScene = self
                     BGMusicPlayer.instance.sbEarliest = (sb?.sbsprites.first?.starttime)!
-                    BGMusicPlayer.instance.setfile(audiofile)
+                    BGMusicPlayer.instance.loadFile(audiofile)
                 }
             } catch StoryBoardError.fileNotFound {
                 Alerts.show(viewController!, title: "Error", message: "storyboard file not found", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)

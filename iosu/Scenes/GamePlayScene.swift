@@ -79,7 +79,7 @@ class GamePlayScene: SKScene {
                         debugPrint("video not found: \(file)")
                     }
                 }
-            } else if bm.bgimg != ""  && !(StoryBoardScene.hasSB) {
+            } else if bm.bgimg != "" && !(StoryBoardScene.hasSB) {
                 debugPrint("got bgimg:\(String(describing: bm.bgimg))")
                 
                 if let bgimg = UIImage(contentsOfFile: folderURL.appendingPathComponent(bm.bgimg).path) {
@@ -127,7 +127,7 @@ class GamePlayScene: SKScene {
             actions?.prepare()
             BGMusicPlayer.instance.gameScene = self
             BGMusicPlayer.instance.gameEarliest = Int((actions?.nexttime())!) - Int((bm.difficulty?.ARTime)!)
-            BGMusicPlayer.instance.setfile(audiofile)
+            BGMusicPlayer.instance.loadFile(audiofile)
             if bgvtimes.count > 0 {
                 BGMusicPlayer.instance.videoEarliest = bgvtimes.first!
             }

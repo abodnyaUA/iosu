@@ -11,34 +11,16 @@ import AVFoundation
 import SpriteKit
 import QuartzCore
 
-enum BGMusicState {
-    case playing
-    case paused
-    case stopped
-}
-
-class BGMusicPlayer: NSObject, AVAudioPlayerDelegate {
+class BGMusicPlayer: MusicPlayer {
     
     static let instance = BGMusicPlayer()
     
-    fileprivate var musicPlayer: AVAudioPlayer!
     open var gameEarliest:Int = 0
     open var videoEarliest:Int = 0
     open var sbEarliest:Int = 0
     open weak var gameScene: GamePlayScene?
     open weak var sbScene: StoryBoardScene?
-    open var state: BGMusicState = .stopped
-    
-    func setfile(_ file:String) {
-        let url = URL(fileURLWithPath: file)
-        self.musicPlayer = try! AVAudioPlayer(contentsOf: url)
-        self.musicPlayer.numberOfLoops = 0
-        self.musicPlayer.volume = Float(Settings.instance.musicVolume)
-        self.musicPlayer.delegate = self
-        state = .paused
-    }
-    
-    fileprivate var starttime:Double = 0
+    fileprivate var startTime: Double = 0
     
     func startPlaying() {
         debugPrint("game earliest: \(gameEarliest)")
@@ -51,53 +33,22 @@ class BGMusicPlayer: NSObject, AVAudioPlayerDelegate {
         } else {
             offset += 100
         }
-        starttime = CACurrentMediaTime() + Double(offset)/1000
+        startTime = CACurrentMediaTime() + Double(offset)/1000
         let musicnode = SKNode()
         if gameScene != nil {
             gameScene?.addChild(musicnode)
         } else {
             sbScene?.addChild(musicnode)
         }
-        musicnode.run(SKAction.sequence([SKAction.wait(forDuration: Double(offset)/1000), SKAction.run {
-            self.musicPlayer.prepareToPlay()
-            self.musicPlayer.play()
+        musicnode.run(SKAction.sequence([SKAction.wait(forDuration: Double(offset)/1000), SKAction.run { [unowned self] in
+            self.musicPlayer?.prepareToPlay()
+            self.musicPlayer?.play()
             self.state = .playing
-            self.starttime = CACurrentMediaTime()
-            }]))
+            self.startTime = CACurrentMediaTime()
+        }]))
     }
     
     func getTime() -> TimeInterval{
-        return CACurrentMediaTime() - starttime
+        return CACurrentMediaTime() - startTime
     }
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        state = .stopped
-    }
-    
-    func pause() {
-        if musicPlayer.isPlaying {
-            musicPlayer.pause()
-        }
-        state = .paused
-    }
-    
-    func play() {
-        if !musicPlayer.isPlaying {
-            musicPlayer.play()
-        }
-        state = .playing
-    }
-    
-    func stop() {
-        musicPlayer.stop()
-        state = .stopped
-    }
-    
-    func isplaying() -> Bool{
-        if musicPlayer==nil {
-            return false
-        }
-        return musicPlayer.isPlaying
-    }
-    
 }

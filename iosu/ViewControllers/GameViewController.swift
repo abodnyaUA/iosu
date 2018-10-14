@@ -120,7 +120,7 @@ class GameViewController: UIViewController {
         BGMusicPlayer.instance.stop()
         BGVPlayer.stop()
         BGVPlayer.view?.removeFromSuperview()
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
