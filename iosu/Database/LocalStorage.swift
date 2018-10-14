@@ -139,9 +139,9 @@ class LocalStorage: NSObject {
                     continue
                 }
                 let folderName = songFolderURL.lastPathComponent
-//                guard !existingSongs.keys.contains(name) else {
-//                    continue
-//                }
+                guard !existingSongs.keys.contains(folderName) else {
+                    continue
+                }
                 guard let contentsOfBMPath = try? manager.contentsOfDirectory(atPath: songFolderURL.path) else {
                     continue
                 }
