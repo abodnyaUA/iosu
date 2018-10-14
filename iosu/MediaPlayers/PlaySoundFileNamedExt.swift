@@ -36,12 +36,12 @@ class SoundNode:SKNode {
 
 public extension SKAction {
     
-    public class func playSoundFileNamed(_ fileName: String, atVolume: Float, waitForCompletion: Bool) -> SKAction {
+    public class func playSoundFileNamed(_ fileName: String, atVolume volume: Double, waitForCompletion: Bool) -> SKAction {
         do {
             let player = try AVAudioPlayer(data: BundleAudioBuffer.get(fileName)!)
             let dummynode = SoundNode(player: player)
             GamePlayScene.current?.addChild(dummynode)
-            player.volume = atVolume
+            player.volume = Float(volume)
             player.prepareToPlay()
             let playAction = SKAction.run {
                 dummynode.play()

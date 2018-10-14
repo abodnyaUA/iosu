@@ -12,9 +12,6 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
-    static var showgame = true
-    static var showvideo = true
-    static var showsb = true
     var alert: UIAlertController!
     let runtestscene = false
     @IBOutlet weak var backBtn: UIButton!
@@ -67,7 +64,7 @@ class GameViewController: UIViewController {
             skView.presentScene(scene)
             return
         }
-        if GameViewController.showsb {
+        if Settings.instance.showStoryboard {
             let storyboard = songInfo.storyboards?.anyObject() as? StoryboardFile
             let sbScene = StoryBoardScene(folderPath: folderPath, storyBoardPath: storyboard?.filePath, osuFilePath: beatmapPath, beatmap: beatmap, size: screenSize, parent: self)
             let sbView = SKView(frame: UIScreen.main.bounds)
@@ -83,13 +80,13 @@ class GameViewController: UIViewController {
             sbScene.scaleMode = .aspectFit
             sbView.presentScene(sbScene)
         }
-        if GameViewController.showvideo {
+        if Settings.instance.showVideo {
             //For video play
             BGVPlayer.initialize()
             BGVPlayer.view?.layer.zPosition = 1
             view.addSubview(BGVPlayer.view!)
         }
-        if GameViewController.showgame {
+        if Settings.instance.showGame {
             let gameScene = GamePlayScene(folderPath: folderPath, beatmap: beatmap, size: screenSize)
             //let skView=self.view as! SKView
             let gameView = SKView(frame: UIScreen.main.bounds)
@@ -99,7 +96,7 @@ class GameViewController: UIViewController {
             //skView.allowsTransparency=true
             gameView.backgroundColor = .clear
             //(self.view as! SKView).allowsTransparency=true
-            if GameViewController.showsb {
+            if Settings.instance.showStoryboard {
                 gameView.showsFPS = false
                 gameView.showsNodeCount = false
             } else {

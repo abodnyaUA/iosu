@@ -25,8 +25,6 @@ class GamePlayScene: SKScene {
     static var scrscale: Double = 1
     static var leftedge: Double = 0
     static var bottomedge :Double = 0
-    static var bgdim: Double = 0.2
-    static var effvolume: Float = 1.0
     static var current: SKScene?
     
     fileprivate var actions: ActionSet?
@@ -70,7 +68,7 @@ class GamePlayScene: SKScene {
         let folderURL = URL(fileURLWithPath: folderPath)
         
         do {
-            if bm.bgvideos.count > 0 && GameViewController.showvideo {
+            if bm.bgvideos.count > 0 && Settings.instance.showVideo {
                 debugPrint("got \(String(describing: bm.bgvideos.count)) videos")
                 for i in 0 ..< bm.bgvideos.count {
                     let file = folderURL.appendingPathComponent(bm.bgvideos[i].file).path
@@ -97,7 +95,7 @@ class GamePlayScene: SKScene {
             }
             let dimnode = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: size.height))
             dimnode.fillColor = .black
-            dimnode.alpha = CGFloat(GamePlayScene.bgdim)
+            dimnode.alpha = CGFloat(Settings.instance.backgroundDim)
             dimnode.zPosition = 1
             addChild(dimnode)
             switch bm.sampleSet {
@@ -191,9 +189,9 @@ class GamePlayScene: SKScene {
         node.zPosition = 100001
         self.addChild(node)
         if result != .fail {
-            self.run(.playSoundFileNamed(audio, atVolume: GamePlayScene.effvolume, waitForCompletion: true))
+            self.run(.playSoundFileNamed(audio, atVolume: Settings.instance.effectsVolume, waitForCompletion: true))
         } else {
-            self.run(.playSoundFileNamed("combobreak.mp3", atVolume: GamePlayScene.effvolume, waitForCompletion: true))
+            self.run(.playSoundFileNamed("combobreak.mp3", atVolume: Settings.instance.effectsVolume, waitForCompletion: true))
         }
         node.run(.group([.sequence([.fadeIn(withDuration: 0.2),.fadeOut(withDuration: 0.6)]),.sequence([.scale(by: 1.5, duration: 0.1),.scale(to: scale, duration: 0.1)])]))
     }
@@ -248,7 +246,7 @@ class GamePlayScene: SKScene {
             hastouch = false
             break
         case .edgePass:
-            self.run(.playSoundFileNamed(hitaudioHeader + hitsound2str(hitsound: sact.getobj().hitSound), atVolume: GamePlayScene.effvolume, waitForCompletion: true))
+            self.run(.playSoundFileNamed(hitaudioHeader + hitsound2str(hitsound: sact.getobj().hitSound), atVolume: Settings.instance.effectsVolume, waitForCompletion: true))
             break
         case .end:
             if sact.failcount > 0 {
@@ -261,10 +259,10 @@ class GamePlayScene: SKScene {
             hastouch = false
             break
         case .tickPass:
-            self.run(.playSoundFileNamed(hitaudioHeader + "slidertick.wav", atVolume: GamePlayScene.effvolume, waitForCompletion: true))
+            self.run(.playSoundFileNamed(hitaudioHeader + "slidertick.wav", atVolume: Settings.instance.effectsVolume, waitForCompletion: true))
             break
         case .failTick:
-            self.run(.playSoundFileNamed("combobreak.mp3", atVolume: GamePlayScene.effvolume, waitForCompletion: true))
+            self.run(.playSoundFileNamed("combobreak.mp3", atVolume: Settings.instance.effectsVolume, waitForCompletion: true))
             break
         default:
             break

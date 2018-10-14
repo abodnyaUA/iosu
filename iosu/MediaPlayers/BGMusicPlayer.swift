@@ -25,16 +25,15 @@ class BGMusicPlayer: NSObject, AVAudioPlayerDelegate {
     open var gameEarliest:Int = 0
     open var videoEarliest:Int = 0
     open var sbEarliest:Int = 0
-    open weak var gameScene:GamePlayScene?
-    open weak var sbScene:StoryBoardScene?
-    open var bgmvolume:Float = 1.0
+    open weak var gameScene: GamePlayScene?
+    open weak var sbScene: StoryBoardScene?
     open var state: BGMusicState = .stopped
     
     func setfile(_ file:String) {
-        let url=URL(fileURLWithPath: file)
+        let url = URL(fileURLWithPath: file)
         self.musicPlayer = try! AVAudioPlayer(contentsOf: url)
-        self.musicPlayer.numberOfLoops=0
-        self.musicPlayer.volume = bgmvolume
+        self.musicPlayer.numberOfLoops = 0
+        self.musicPlayer.volume = Float(Settings.instance.musicVolume)
         self.musicPlayer.delegate = self
         state = .paused
     }
