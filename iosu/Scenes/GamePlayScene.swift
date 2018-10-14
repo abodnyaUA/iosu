@@ -12,30 +12,41 @@ import GameplayKit
 
 class GamePlayScene: SKScene {
     
-    var bmactions:[SKAction] = []
-    var actiontimepoints:[Int] = []
+    var bmactions = [SKAction]()
+    var actiontimepoints = [Int]()
     static var testBMIndex = 6 //The index of beatmap to test in the beatmaps
-    var maxlayer:CGFloat=100000
-    var minlayer:CGFloat=0
-    var hitaudioHeader:String = "normal-"
-    static var realwidth:Double=512
-    static var realheight:Double=384
-    static var scrwidth:Double=750
-    static var scrheight:Double=750
-    static var scrscale:Double=1
-    static var leftedge:Double=0
-    static var bottomedge:Double=0
-    static var bgdim:Double=0.2
-    static var effvolume:Float = 1.0
-    static var current:SKScene?
+    var maxlayer: CGFloat = 100000
+    var minlayer: CGFloat = 0
+    var hitaudioHeader: String = "normal-"
+    static var realwidth: Double = 512
+    static var realheight: Double = 384
+    static var scrwidth: Double = 750
+    static var scrheight: Double = 750
+    static var scrscale: Double = 1
+    static var leftedge: Double = 0
+    static var bottomedge :Double = 0
+    static var bgdim: Double = 0.2
+    static var effvolume: Float = 1.0
+    static var current: SKScene?
     
-    fileprivate var actions:ActionSet?
+    fileprivate var actions: ActionSet?
     
-    fileprivate var bgvactions:[SKAction]=[]
-    fileprivate var bgvtimes:[Int]=[]
+    fileprivate var bgvactions = [SKAction]()
+    fileprivate var bgvtimes = [Int]()
     
     static var sliderball: SliderBall?
-    var bm:Beatmap?
+    
+    let folderPath: String
+    let bm: Beatmap
+    init(folderPath: String, beatmap: Beatmap, size: CGSize) {
+        self.folderPath = folderPath
+        self.bm = beatmap
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func sceneDidLoad() {
         GamePlayScene.current = self
@@ -47,41 +58,41 @@ class GamePlayScene: SKScene {
         GamePlayScene.scrheight = Double(size.height)
         GamePlayScene.bottomedge = (Double(size.height) - GamePlayScene.realheight) / 2
         GamePlayScene.leftedge = (Double(size.width) - GamePlayScene.realwidth) / 2
-        let beatmaps=BeatmapScanner()
-        debugPrint("test beatmap:\(beatmaps.beatmaps[GamePlayScene.testBMIndex])")
+        
+        debugPrint("test beatmap:\(folderPath)")
         debugPrint("Enter GamePlayScene, screen size: \(size.width)*\(size.height)")
         debugPrint("scrscale:\(GamePlayScene.scrscale)")
         debugPrint("realwidth:\(GamePlayScene.realwidth)")
         debugPrint("realheight:\(GamePlayScene.realheight)")
         debugPrint("bottomedge:\(GamePlayScene.bottomedge)")
         debugPrint("leftedge:\(GamePlayScene.leftedge)")
-        do{
-            bm = try Beatmap(file: (beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[GamePlayScene.testBMIndex]])[0])
-            if (bm?.bgvideos.count)! > 0 && GameViewController.showvideo {
-                debugPrint("got \(String(describing: bm?.bgvideos.count)) videos")
-                for i in 0...(bm?.bgvideos.count)!-1 {
-                    let file=(beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [(bm?.bgvideos[i].file)!])[0]
-                    //var file=URL(fileURLWithPath: beatmaps.beatmapdirs[GamePlayScene.testBMIndex], isDirectory: true)
-                    //let file=beatmaps.bmdirurls[GamePlayScene.testBMIndex].appendingPathComponent(bm?.bgvideos[i])
+        
+        let folderURL = URL(fileURLWithPath: folderPath)
+        
+        do {
+            if bm.bgvideos.count > 0 && GameViewController.showvideo {
+                debugPrint("got \(String(describing: bm.bgvideos.count)) videos")
+                for i in 0 ..< bm.bgvideos.count {
+                    let file = folderURL.appendingPathComponent(bm.bgvideos[i].file).path
                     if FileManager.default.fileExists(atPath: file) {
                         bgvactions.append(BGVPlayer.setcontent(file))
-                        bgvtimes.append((bm?.bgvideos[i].time)!)
+                        bgvtimes.append(bm.bgvideos[i].time)
                     } else {
                         debugPrint("video not found: \(file)")
                     }
                 }
-            } else if bm?.bgimg != ""  && !(StoryBoardScene.hasSB) {
-                debugPrint("got bgimg:\(String(describing: bm?.bgimg))")
-                let bgimg=UIImage(contentsOfFile: (beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [(bm?.bgimg)!])[0])
-                if bgimg==nil {
-                    debugPrint("Background image not found")
-                } else {
-                    let bgnode=SKSpriteNode(texture: SKTexture(image: bgimg!))
-                    let bgscale:CGFloat = max(size.width/(bgimg?.size.width)!,size.height/(bgimg?.size.height)!)
+            } else if bm.bgimg != ""  && !(StoryBoardScene.hasSB) {
+                debugPrint("got bgimg:\(String(describing: bm.bgimg))")
+                
+                if let bgimg = UIImage(contentsOfFile: folderURL.appendingPathComponent(bm.bgimg).path) {
+                    let bgnode = SKSpriteNode(texture: SKTexture(image: bgimg))
+                    let bgscale:CGFloat = max(size.width / bgimg.size.width, size.height / bgimg.size.height)
                     bgnode.setScale(bgscale)
-                    bgnode.zPosition=0
-                    bgnode.position=CGPoint(x: size.width/2, y: size.height/2)
+                    bgnode.zPosition = 0
+                    bgnode.position = CGPoint(x: size.width/2, y: size.height/2)
                     addChild(bgnode)
+                } else {
+                    debugPrint("Background image not found")
                 }
             }
             let dimnode = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: size.height))
@@ -89,7 +100,7 @@ class GamePlayScene: SKScene {
             dimnode.alpha = CGFloat(GamePlayScene.bgdim)
             dimnode.zPosition = 1
             addChild(dimnode)
-            switch (bm?.sampleSet)! {
+            switch bm.sampleSet {
             case .auto:
                 //Likely to be an error
                 hitaudioHeader = "normal-"
@@ -104,21 +115,21 @@ class GamePlayScene: SKScene {
                 hitaudioHeader = "drum-"
                 break
             }
-            debugPrint("bgimg:\(String(describing: bm?.bgimg))")
-            debugPrint("audio:\(String(describing: bm?.audiofile))")
-            debugPrint("colors: \(String(describing: bm?.colors.count))")
-            debugPrint("timingpoints: \(String(describing: bm?.timingpoints.count))")
-            debugPrint("hitobjects: \(String(describing: bm?.hitobjects.count))")
+            debugPrint("bgimg:\(String(describing: bm.bgimg))")
+            debugPrint("audio:\(String(describing: bm.audiofile))")
+            debugPrint("colors: \(String(describing: bm.colors.count))")
+            debugPrint("timingpoints: \(String(describing: bm.timingpoints.count))")
+            debugPrint("hitobjects: \(String(describing: bm.hitobjects.count))")
             debugPrint("hitsoundset: \(hitaudioHeader)")
-            bm?.audiofile = (beatmaps.beatmapdirs[GamePlayScene.testBMIndex] as NSString).strings(byAppendingPaths: [(bm?.audiofile)!])[0] as String
-            if !FileManager.default.fileExists(atPath: (bm?.audiofile)!){
+            let audiofile = folderURL.appendingPathComponent(bm.audiofile).path
+            if !FileManager.default.fileExists(atPath: audiofile) {
                 throw BeatmapError.audioFileNotExist
             }
-            actions = ActionSet(beatmap: bm!, scene: self)
+            actions = ActionSet(beatmap: bm, scene: self)
             actions?.prepare()
             BGMusicPlayer.instance.gameScene = self
-            BGMusicPlayer.instance.gameEarliest = Int((actions?.nexttime())!) - Int((bm?.difficulty?.ARTime)!)
-            BGMusicPlayer.instance.setfile((bm?.audiofile)!)
+            BGMusicPlayer.instance.gameEarliest = Int((actions?.nexttime())!) - Int((bm.difficulty?.ARTime)!)
+            BGMusicPlayer.instance.setfile(audiofile)
             if bgvtimes.count > 0 {
                 BGMusicPlayer.instance.videoEarliest = bgvtimes.first!
             }
@@ -172,7 +183,7 @@ class GamePlayScene: SKScene {
             break
         }
         let node = SKSpriteNode(texture: img)
-        let scale = CGFloat((bm?.difficulty?.AbsoluteCS)! / 128)
+        let scale = CGFloat((bm.difficulty?.AbsoluteCS)! / 128)
         node.setScale(scale)
         node.colorBlendFactor = 0
         node.alpha = 0
@@ -217,7 +228,7 @@ class GamePlayScene: SKScene {
         let sact = act as! SliderAction
         let sliderpoint = sact.getposition(time)
         if hastouch {
-            if distance(x1: lastpoint.x, y1: lastpoint.y, x2: sliderpoint.x, y2: sliderpoint.y) <= CGFloat((bm?.difficulty?.AbsoluteCS)!) {
+            if distance(x1: lastpoint.x, y1: lastpoint.y, x2: sliderpoint.x, y2: sliderpoint.y) <= CGFloat((bm.difficulty?.AbsoluteCS)!) {
                 onslider = true
                 GamePlayScene.sliderball?.showfollowcircle()
             } else {
@@ -267,9 +278,9 @@ class GamePlayScene: SKScene {
             let time = BGMusicPlayer.instance.getTime()*1000
             switch (act?.getobj().type)! {
             case .circle:
-                if (act?.gettime())! - time < (bm?.difficulty?.ARTime)! {
+                if (act?.gettime())! - time < (bm.difficulty?.ARTime)! {
                     let circle = act?.getobj() as! HitCircle
-                    if distance(x1: pos.x, y1: pos.y, x2: CGFloat(circle.x), y2: CGFloat(circle.y)) <= CGFloat((bm?.difficulty?.AbsoluteCS)!) {
+                    if distance(x1: pos.x, y1: pos.y, x2: CGFloat(circle.x), y2: CGFloat(circle.y)) <= CGFloat((bm.difficulty?.AbsoluteCS)!) {
                         //debugPrint("time:\(time) required:\(act?.gettime())")
                         let result = (act as! CircleAction).judge(time)
                         showresult(x: CGFloat(circle.x), y: CGFloat(circle.y), result: result, audio: hitaudioHeader + hitsound2str(hitsound: circle.hitSound))
@@ -339,14 +350,13 @@ class GamePlayScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        if(firstrun){
-            firstrun=false
-            GamePlayScene.sliderball?.initialize(CGFloat((bm?.difficulty?.AbsoluteCS)!))
+        if firstrun {
+            firstrun = false
+            GamePlayScene.sliderball?.initialize(CGFloat((bm.difficulty?.AbsoluteCS)!))
         }
         if BGMusicPlayer.instance.state == .stopped {
             destroyNode(self)
-            bm?.hitobjects.removeAll()
-            bm = nil
+            bm.hitobjects.removeAll()
             actions?.destroy()
             actions = nil
             SkinBuffer.clean()
@@ -363,7 +373,7 @@ class GamePlayScene: SKScene {
                 self.bgvindex += 1
             }
         }
-        dispatcher.async {
+        dispatcher.async { [unowned self] in
             if BGMusicPlayer.instance.state == .stopped {
                 return
             }
@@ -374,15 +384,15 @@ class GamePlayScene: SKScene {
                     self.updateslider(mtime)
                 }
             }
-            if let bm = self.bm, let actions = self.actions {
-                var offset = actions.nexttime() - mtime - (bm.difficulty?.ARTime)!
+            if let actions = self.actions {
+                var offset = actions.nexttime() - mtime - (self.bm.difficulty?.ARTime)!
                 while actions.hasnext() && offset <= 1000 {
                     if BGMusicPlayer.instance.state == .stopped {
                         return
                     }
-                    //debugPrint("mtime \(mtime) objtime \((actions?.nexttime())!) ar \((bm?.difficulty?.ARTime)!) offset \(offset)")
+                    //debugPrint("mtime \(mtime) objtime \((actions?.nexttime())!) ar \((bm.difficulty?.ARTime)!) offset \(offset)")
                     actions.shownext(offset)
-                    offset = actions.nexttime() - mtime - (bm.difficulty?.ARTime)!
+                    offset = actions.nexttime() - mtime - (self.bm.difficulty?.ARTime)!
                 }
             }
         }

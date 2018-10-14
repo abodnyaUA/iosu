@@ -21,7 +21,7 @@ class BMDifficulty {
     
     fileprivate let HPDrainRate:Double
     fileprivate let CircleSize:Double
-    fileprivate let OverallDifficulty:Double
+    let overallDifficulty:Double
     fileprivate let ApproachRate:Double
     open let SliderMultiplier:Double
     open let SliderTickRate:Double
@@ -36,7 +36,7 @@ class BMDifficulty {
     init(HP:Double,CS:Double,OD:Double,AR:Double,SM:Double,ST:Double) {
         HPDrainRate=HP
         CircleSize=CS
-        OverallDifficulty=OD
+        overallDifficulty=OD
         ApproachRate=AR
         SliderMultiplier=SM
         SliderTickRate=ST

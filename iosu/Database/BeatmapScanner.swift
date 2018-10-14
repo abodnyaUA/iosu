@@ -11,6 +11,13 @@ import Zip
 
 class BeatmapScanner {
     
+    struct Song {
+        let name: String
+        let textColor: UIColor
+        let backgroundColor: UIColor
+        let thumbnail: UIImage?
+    }
+    
     public var beatmapdirs = [String]()
     public var bmdirurls = [URL]()
     public var beatmaps = [String]()

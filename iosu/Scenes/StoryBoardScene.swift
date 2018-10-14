@@ -17,38 +17,45 @@ class StoryBoardScene: SKScene {
     var minlayer: CGFloat = 0.0
     var hitaudioHeader: String = "normal-"
     //StoryBoard.stdwidth=854
-    var audiofile=""
-    var sb: StoryBoard?
+    var audiofile = ""
+    var sb: StoryBoard!
     open weak var viewController: GameViewController?
     static var hasSB = false
     
-    init(size: CGSize, parent: GameViewController) {
-        //debugPrint("enter constructor,parent is \(parent)")
+    let folderPath: String
+    let storyBoardPath: String?
+    let osuFilePath: String
+    let bm: Beatmap
+    init(folderPath: String, storyBoardPath: String?, osuFilePath: String, beatmap: Beatmap, size: CGSize, parent: GameViewController) {
         self.viewController = parent
+        self.folderPath = folderPath
+        self.osuFilePath = osuFilePath
+        self.bm = beatmap
+        self.storyBoardPath = storyBoardPath
         super.init(size: size)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func sceneDidLoad() {
         self.backgroundColor = .clear
-        let beatmaps = BeatmapScanner()
-        debugPrint("test beatmap:\(beatmaps.beatmaps[StoryBoardScene.testBMIndex])")
+        
+        let folderURL = URL(fileURLWithPath: folderPath)
+        
+        debugPrint("test beatmap:\(folderPath)")
         debugPrint("Enter StoryBoardScene, screen size: \(size.width)*\(size.height)")
         do {
-            let bm = try Beatmap(file: (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0])
             debugPrint("bgimg:\(bm.bgimg)")
             debugPrint("audio:\(bm.audiofile)")
             debugPrint("colors: \(bm.colors.count)")
             debugPrint("timingpoints: \(bm.timingpoints.count)")
             debugPrint("hitobjects: \(bm.hitobjects.count)")
-            bm.audiofile = (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [bm.audiofile])[0] as String
-            if !FileManager.default.fileExists(atPath: bm.audiofile) {
+            audiofile = folderURL.appendingPathComponent(bm.audiofile).path
+            if !FileManager.default.fileExists(atPath: audiofile) {
                 throw BeatmapError.audioFileNotExist
             }
-            audiofile = bm.audiofile
         } catch BeatmapError.fileNotFound {
             Alerts.show(viewController!, title: "Error", message: "beatmap file not found", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
             debugPrint("ERROR:beatmap file not found")
@@ -71,9 +78,16 @@ class StoryBoardScene: SKScene {
             Alerts.show(viewController!, title: "Error", message: "unknown error(\(error.localizedDescription))", style: .alert, actiontitle: "OK", actionstyle: .cancel, handler: nil)
             debugPrint("ERROR:unknown error(\(error.localizedDescription))")
         }
-        if beatmaps.dirscontainsb.contains(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex]) {
+        if let storyboardPath = self.storyBoardPath {
             do {
-                sb = try StoryBoard(directory:beatmaps.beatmapdirs[StoryBoardScene.testBMIndex],osufile:(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0],osbfile: (beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).appendingPathComponent(beatmaps.storyboards[beatmaps.beatmapdirs[StoryBoardScene.testBMIndex]]!), width: Double(size.width), height: Double(size.height), layer: 0)
+                sb = try StoryBoard(
+                    directory: folderPath,
+                    osufile: osuFilePath,
+                    osbfile: storyboardPath,
+                    width: Double(size.width),
+                    height: Double(size.height),
+                    layer: 0
+                )
                 debugPrint("storyboard object count: \(String(describing: sb?.sbsprites.count))")
                 debugPrint("storyboard earliest time: \(String(describing: sb?.earliest))")
                 if (sb?.sbsprites.count)! > 0 {
@@ -82,8 +96,8 @@ class StoryBoardScene: SKScene {
                     return
                 }
                 if !ImageBuffer.notfoundimages.isEmpty {
-                    debugPrint("parent:\(viewController==nil)")
-                    viewController?.alert=Alerts.create("Warning", message: ImageBuffer.notfound2str(), style: .alert, action1title: "Cancel", action1style: .cancel, handler1: nil, action2title: "Continue", action2style: .default, handler2: {(action:UIAlertAction)->Void in
+                    debugPrint("parent:\(viewController == nil)")
+                    viewController?.alert = Alerts.create("Warning", message: ImageBuffer.notfound2str(), style: .alert, action1title: "Cancel", action1style: .cancel, handler1: nil, action2title: "Continue", action2style: .default, handler2: { (action:UIAlertAction)->Void in
                         BGMusicPlayer.instance.sbScene = self
                         BGMusicPlayer.instance.sbEarliest = (self.sb?.sbsprites.first?.starttime)!
                     })
@@ -105,7 +119,13 @@ class StoryBoardScene: SKScene {
         } else {
             do {
                 debugPrint(".osb file not found")
-                sb = try StoryBoard(directory:beatmaps.beatmapdirs[StoryBoardScene.testBMIndex],osufile:(beatmaps.beatmapdirs[StoryBoardScene.testBMIndex] as NSString).strings(byAppendingPaths: [beatmaps.beatmaps[StoryBoardScene.testBMIndex]])[0], width: Double(size.width), height: Double(size.height), layer: 0)
+                sb = try StoryBoard(
+                    directory: folderPath,
+                    osufile: osuFilePath,
+                    width: Double(size.width),
+                    height: Double(size.height),
+                    layer: 0
+                )
                 debugPrint("storyboard object count: \(String(describing: sb?.sbsprites.count))")
                 debugPrint("storyboard earliest time: \(String(describing: sb?.earliest))")
                 if (sb?.sbsprites.count)! > 0 {
@@ -114,7 +134,7 @@ class StoryBoardScene: SKScene {
                     return
                 }
                 if !ImageBuffer.notfoundimages.isEmpty {
-                    Alerts.show(viewController!, title: "Warning", message: ImageBuffer.notfound2str(), style: .alert, action1title: "Cancel", action1style: .cancel, handler1: nil, action2title: "Continue", action2style: .default, handler2: {(action:UIAlertAction)->Void in
+                    Alerts.show(viewController!, title: "Warning", message: ImageBuffer.notfound2str(), style: .alert, action1title: "Cancel", action1style: .cancel, handler1: nil, action2title: "Continue", action2style: .default, handler2: { (action:UIAlertAction) -> Void in
                         BGMusicPlayer.instance.sbScene = self
                         BGMusicPlayer.instance.sbEarliest = (self.sb?.sbsprites.first?.starttime)!
                     })
@@ -163,12 +183,12 @@ class StoryBoardScene: SKScene {
         dispatcher.async { [unowned self] in
             if BGMusicPlayer.instance.state != .stopped {
                 if let sb = self.sb {
-                    if self.index<sb.sbsprites.count {
+                    if self.index < sb.sbsprites.count {
                         var musictime = Int(BGMusicPlayer.instance.getTime() * 1000)
                         while sb.sbsprites[self.index].starttime - musictime <= 2000 {
                             var offset = sb.sbsprites[self.index].starttime - musictime
                             sb.sbsprites[self.index].convertsprite()
-                            if offset<0{
+                            if offset < 0{
                                 offset = 0
                             }
                             if BGMusicPlayer.instance.state == .stopped {
@@ -182,7 +202,7 @@ class StoryBoardScene: SKScene {
                             if self.index >= sb.sbsprites.count{
                                 return
                             }
-                            musictime=Int(BGMusicPlayer.instance.getTime() * 1000)
+                            musictime = Int(BGMusicPlayer.instance.getTime() * 1000)
                         }
                     }
                 }
