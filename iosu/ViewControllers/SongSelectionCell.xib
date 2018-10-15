@@ -22,9 +22,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Eh-ra-QZG">
                         <rect key="frame" x="0.0" y="4" width="316" height="60.5"/>
                         <subviews>
-                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cjs-qH-wVI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cjs-qH-wVI">
                                 <rect key="frame" x="0.0" y="0.0" width="316" height="60.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.0" green="0.73333333329999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qUO-Lq-Qw6">
                                 <rect key="frame" x="0.0" y="0.0" width="316" height="60.5"/>
@@ -86,7 +86,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.92549020049999997" green="0.23529411850000001" blue="0.1019607857" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Cjs-qH-wVI" secondAttribute="bottom" id="2t3-vJ-CgD"/>
                             <constraint firstItem="Cjs-qH-wVI" firstAttribute="leading" secondItem="7Eh-ra-QZG" secondAttribute="leading" id="C65-D5-610"/>
