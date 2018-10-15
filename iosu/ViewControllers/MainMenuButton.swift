@@ -29,8 +29,8 @@ class MainMenuButton: UIControl {
             title.right == icon.left
             subtitle.left == title.left
             subtitle.right == title.right
-            subtitle.top == title.bottom + 2.0
-            subtitle.bottom == parent.bottom - 4.0
+            subtitle.top == title.bottom
+            subtitle.bottom <= parent.bottom - 4.0
             icon.right == parent.right
             icon.top == parent.top + 8.0
             icon.width == icon.height

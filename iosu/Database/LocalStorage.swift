@@ -120,7 +120,7 @@ class LocalStorage: NSObject {
         }
     }
     
-    private func scanBeatmaps(completion: @escaping () -> Void) {
+    func scanBeatmaps(completion: @escaping () -> Void) {
         performBackgroundOperation { [unowned self] (context) in
             let request: NSFetchRequest<SongInfo> = SongInfo.fetchRequest()
             var existingSongs = (try! context.fetch(request)).dictionary(map: { (song) -> String in
@@ -174,7 +174,10 @@ class LocalStorage: NSObject {
                         }
                         if song.name == nil {
                             song.name = beatmap.meta?.title
-                            song.author = beatmap.meta?.artist
+                            song.artist = beatmap.meta?.artist
+                        }
+                        if song.beatmapId == nil {
+                            song.beatmapId = beatmap.meta?.beatmapId
                         }
                     } else if url.pathExtension == "osb" {
                         let storyboardFile = StoryboardFile(context: context)

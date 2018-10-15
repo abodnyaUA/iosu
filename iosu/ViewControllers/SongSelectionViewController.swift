@@ -184,8 +184,8 @@ extension SongSelectionViewController: UITableViewDataSource {
         switch item {
         case .song:
             cell.backgroundColorView.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-            if let author = songInfo.author {
-                cell.difficultyLabel.text = "Author: \(author)"
+            if let artist = songInfo.artist {
+                cell.difficultyLabel.text = "Artist: \(artist)"
             } else {
                 cell.difficultyLabel.text = nil
             }

@@ -27,11 +27,18 @@ class MainMenuViewController: UIViewController {
         
         downloadButton.titleLabel.text = "Get songs"
         downloadButton.subtitleLabel.text = "Download more songs"
+        downloadButton.addTarget(self, action: #selector(downloadSongs), for: .touchUpInside)
     }
     
     @objc func showSongsSelection() {
         SoundPlayer.instance.playSound(.menuClick)
         let viewController = storyboard!.instantiateViewController(withIdentifier: "selection")
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc func downloadSongs() {
+        SoundPlayer.instance.playSound(.menuClick)
+        let viewController = storyboard!.instantiateViewController(withIdentifier: "downloads")
         navigationController?.pushViewController(viewController, animated: true)
     }
 

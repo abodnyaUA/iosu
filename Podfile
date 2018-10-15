@@ -7,4 +7,5 @@ target "iosu" do
     pod 'Zip', '~> 1.1'
     pod 'UIImageColors', '~> 2.0'
     pod 'Cartography'
+    pod 'SDWebImage', '~>3.7'
 end

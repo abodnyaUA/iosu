@@ -7,10 +7,11 @@
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SongInfo" inverseName="files" inverseEntity="SongInfo" syncable="YES"/>
     </entity>
     <entity name="SongInfo" representedClassName="SongInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="audioFilename" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="backgroundColorHex" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="backgroundImageFilename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="beatmapId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="folderName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="primaryColorHex" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,7 +24,7 @@
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SongInfo" inverseName="storyboards" inverseEntity="SongInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SongInfo" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="SongInfo" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="StoryboardFile" positionX="-54" positionY="-9" width="128" height="75"/>
         <element name="BeatmapFile" positionX="-36" positionY="9" width="128" height="105"/>
     </elements>

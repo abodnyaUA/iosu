@@ -22,6 +22,9 @@
 		79EAF3E021746AD000828B0D /* BeatmapMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3DF21746AD000828B0D /* BeatmapMeta.swift */; };
 		79EAF3E221746EAB00828B0D /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3E121746EAB00828B0D /* MainMenuViewController.swift */; };
 		79EAF3E421746FD500828B0D /* MainMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3E321746FD500828B0D /* MainMenuButton.swift */; };
+		79EAF3E721747B3600828B0D /* DownloadSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3E621747B3600828B0D /* DownloadSongsViewController.swift */; };
+		79EAF3F021747BCE00828B0D /* SongsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3EF21747BCE00828B0D /* SongsDownloader.swift */; };
+		79EAF3F22174A7BB00828B0D /* CaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3F12174A7BB00828B0D /* CaptchaViewController.swift */; };
 		8A0442B31ECB2227000DE269 /* UIBezierPath+Length.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */; };
 		8A1ACE721EFAB529000EBC14 /* PlaySoundFileNamedExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE711EFAB529000EBC14 /* PlaySoundFileNamedExt.swift */; };
 		8A1ACE741EFAB985000EBC14 /* BundleAudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE731EFAB985000EBC14 /* BundleAudioBuffer.swift */; };
@@ -136,6 +139,13 @@
 			remoteGlobalIDString = 137C13B1C3CB5299787D5692C7C6E44D;
 			remoteInfo = UIImageColors;
 		};
+		79EAF3ED21747B3800828B0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8AA559451F06B18C00C77AE5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A1690071AEA041D5F62CF53AF1EF3087;
+			remoteInfo = Cartography;
+		};
 		8AA559A61F06B18C00C77AE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8AA559451F06B18C00C77AE5 /* Pods.xcodeproj */;
@@ -170,6 +180,9 @@
 		79EAF3DF21746AD000828B0D /* BeatmapMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapMeta.swift; sourceTree = "<group>"; };
 		79EAF3E121746EAB00828B0D /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		79EAF3E321746FD500828B0D /* MainMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuButton.swift; sourceTree = "<group>"; };
+		79EAF3E621747B3600828B0D /* DownloadSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSongsViewController.swift; sourceTree = "<group>"; };
+		79EAF3EF21747BCE00828B0D /* SongsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsDownloader.swift; sourceTree = "<group>"; };
+		79EAF3F12174A7BB00828B0D /* CaptchaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptchaViewController.swift; sourceTree = "<group>"; };
 		8A0442A81ECB1D0B000DE269 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = "../../Library/Developer/Xcode/DerivedData/iosu-gddpvylvaevfhyenmhqlpckshyiw/Build/Products/Debug-iphoneos/SQLite.swift/SQLite.framework"; sourceTree = "<group>"; };
 		8A0442AF1ECB2227000DE269 /* UIBezierPath+Length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Length.h"; sourceTree = "<group>"; };
 		8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Length.m"; sourceTree = "<group>"; };
@@ -488,6 +501,7 @@
 		8AA559461F06B18C00C77AE5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				79EAF3EE21747B3800828B0D /* Cartography.framework */,
 				8AA559A71F06B18C00C77AE5 /* Pods_iosu.framework */,
 				8AA559A91F06B18C00C77AE5 /* SpriteKitEasingSwift.framework */,
 				79EAF3CA217387BA00828B0D /* UIImageColors.framework */,
@@ -920,6 +934,8 @@
 				79EAF3D221738D0D00828B0D /* SongSelectionCell.xib */,
 				79EAF3E121746EAB00828B0D /* MainMenuViewController.swift */,
 				79EAF3E321746FD500828B0D /* MainMenuButton.swift */,
+				79EAF3E621747B3600828B0D /* DownloadSongsViewController.swift */,
+				79EAF3F12174A7BB00828B0D /* CaptchaViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -954,6 +970,7 @@
 				79EAF3BB21736CF000828B0D /* Database.xcdatamodeld */,
 				79EAF3C02173807500828B0D /* NSManagedObject+Extensions.swift */,
 				79EAF3CB2173880600828B0D /* SongInfo+Extensions.swift */,
+				79EAF3EF21747BCE00828B0D /* SongsDownloader.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -1065,6 +1082,13 @@
 			remoteRef = 79EAF3C9217387BA00828B0D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		79EAF3EE21747B3800828B0D /* Cartography.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Cartography.framework;
+			remoteRef = 79EAF3ED21747B3800828B0D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8AA559A71F06B18C00C77AE5 /* Pods_iosu.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1142,6 +1166,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-iosu/Pods-iosu-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SpriteKitEasingSwift/SpriteKitEasingSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
 				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
@@ -1149,6 +1174,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpriteKitEasingSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
@@ -1223,12 +1249,14 @@
 				79EAF3CE21738B4100828B0D /* SongSelectionViewController.swift in Sources */,
 				8ADC1E971ECB15D300E0E9AB /* AlertView.swift in Sources */,
 				8ADC1EA31ECB16C400E0E9AB /* HitObjectAction.swift in Sources */,
+				79EAF3F22174A7BB00828B0D /* CaptchaViewController.swift in Sources */,
 				8ADC1E4D1ECB0E2600E0E9AB /* CircleAction.swift in Sources */,
 				8ADC1E3C1ECB0CA500E0E9AB /* HitObject.swift in Sources */,
 				8ADC1E551ECB0EFB00E0E9AB /* ActionSet.swift in Sources */,
 				8ADC1E741ECB125700E0E9AB /* SBFade.swift in Sources */,
 				8ADC1E9E1ECB163300E0E9AB /* BGVideoPlayer.swift in Sources */,
 				8ADC1E8F1ECB14DD00E0E9AB /* GameViewController.swift in Sources */,
+				79EAF3F021747BCE00828B0D /* SongsDownloader.swift in Sources */,
 				8ADC1E7A1ECB12CB00E0E9AB /* SBScale.swift in Sources */,
 				79EAF3BF21737D5800828B0D /* DictionaryExtensions.swift in Sources */,
 				8ADC1E921ECB155400E0E9AB /* Difficulty.swift in Sources */,
@@ -1251,6 +1279,7 @@
 				8ADC1E371ECB0BF600E0E9AB /* BeatmapEnums.swift in Sources */,
 				8A0442B31ECB2227000DE269 /* UIBezierPath+Length.m in Sources */,
 				8ADC1E441ECB0D3400E0E9AB /* SliderBall.swift in Sources */,
+				79EAF3E721747B3600828B0D /* DownloadSongsViewController.swift in Sources */,
 				79EAF3E421746FD500828B0D /* MainMenuButton.swift in Sources */,
 				8AFC00DC1F051E6E0029DC9D /* SkinBuffer.swift in Sources */,
 				79EAF3D82173C3E300828B0D /* Settings.swift in Sources */,
@@ -1405,7 +1434,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = iosu/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1465,7 +1494,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = iosu/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
