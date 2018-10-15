@@ -82,12 +82,19 @@ class SongsDownloader: NSObject {
         }
     }
     
+    func songsInDownloading() -> [Song] {
+        return updateTasksQueue.sync(execute: { [unowned self] in
+            return self.tasks.values.map({ $0.song })
+        })
+    }
+    
     func downloadSong(_ song: Song, completion: @escaping (_ result: DownloadResult) -> Void) {
         let url = song.downloadURL
         var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         addTask(DownloadInfo(song: song, completion: completion), key: url.absoluteString)
-        let task = session.downloadTask(with: request) { (localUrl, response, error) in
+        let task = session.downloadTask(with: request) { [weak self] (localUrl, response, error) in
+            self?.removeTask(for: url.absoluteString)
             var invalidResponse = false
             if let response = response as? HTTPURLResponse {
                 print("response: \(response)")

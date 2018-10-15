@@ -18,6 +18,7 @@ class DownloadSongsViewController: UIViewController {
     @IBOutlet weak var downloadingLabel: UILabel!
     @IBOutlet weak var downloadProgressLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    let searchBar = UISearchBar()
     
     private var currentPage = 1
     private var songs = [SongsDownloader.Song]()
@@ -35,6 +36,10 @@ class DownloadSongsViewController: UIViewController {
             self?.trackProgress(notification: notification)
         })
         
+        searchBar.delegate = self
+        tableView.tableHeaderView = searchBar
+        tableView.keyboardDismissMode = .onDrag
+        searchBar.sizeToFit()
         refetchSongs()
     }
     
@@ -56,17 +61,22 @@ class DownloadSongsViewController: UIViewController {
     }
     
     private func fetchSongs() {
-        SongsDownloader.instance.searchSongs(query: "", page: currentPage) { [weak self] (songs) in
+        SongsDownloader.instance.searchSongs(query: searchBar.text ?? "", page: currentPage) { [weak self] (songs) in
             LocalStorage.shared.performBackgroundOperation({ (context) in
                 let request: NSFetchRequest<SongInfo> = SongInfo.fetchRequest()
                 let existingSongs = (try! context.fetch(request)).dictionary(map: { (song) -> String in
                     return song.beatmapId ?? ""
                 })
                 var processedSongs = [SongsDownloader.Song]()
+                let downloading = SongsDownloader.instance.songsInDownloading().dictionary(map: { (song) -> String in
+                    return song.beatmapId
+                })
                 songs.forEach({ (song) in
                     var newSong = song
                     if existingSongs[song.beatmapId] != nil {
                         newSong.downloadingState = .downloaded
+                    } else if downloading[song.beatmapId] != nil {
+                        newSong.downloadingState = .startedDownloading
                     }
                     processedSongs.append(newSong)
                 })
@@ -178,6 +188,14 @@ class DownloadSongsViewController: UIViewController {
         }
         let song = songs[index]
         initiateDownload(song: song)
+    }
+}
+
+extension DownloadSongsViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        refetchSongs()
     }
 }
 
