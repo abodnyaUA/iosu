@@ -6,4 +6,5 @@ target "iosu" do
 	pod 'MobileVLCKit'
     pod 'Zip', '~> 1.1'
     pod 'UIImageColors', '~> 2.0'
+    pod 'Cartography'
 end

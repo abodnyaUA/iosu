@@ -147,6 +147,11 @@ class SongSelectionViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func back(_ sender: Any) {
+        SoundPlayer.instance.playSound(.menuClick)
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension SongSelectionViewController: NSFetchedResultsControllerDelegate {

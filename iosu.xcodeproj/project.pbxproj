@@ -20,6 +20,8 @@
 		79EAF3DA2173C9CF00828B0D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3D92173C9CF00828B0D /* SoundPlayer.swift */; };
 		79EAF3DE2173CDE700828B0D /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3DD2173CDE700828B0D /* MusicPlayer.swift */; };
 		79EAF3E021746AD000828B0D /* BeatmapMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3DF21746AD000828B0D /* BeatmapMeta.swift */; };
+		79EAF3E221746EAB00828B0D /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3E121746EAB00828B0D /* MainMenuViewController.swift */; };
+		79EAF3E421746FD500828B0D /* MainMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3E321746FD500828B0D /* MainMenuButton.swift */; };
 		8A0442B31ECB2227000DE269 /* UIBezierPath+Length.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */; };
 		8A1ACE721EFAB529000EBC14 /* PlaySoundFileNamedExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE711EFAB529000EBC14 /* PlaySoundFileNamedExt.swift */; };
 		8A1ACE741EFAB985000EBC14 /* BundleAudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE731EFAB985000EBC14 /* BundleAudioBuffer.swift */; };
@@ -166,6 +168,8 @@
 		79EAF3D92173C9CF00828B0D /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		79EAF3DD2173CDE700828B0D /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		79EAF3DF21746AD000828B0D /* BeatmapMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapMeta.swift; sourceTree = "<group>"; };
+		79EAF3E121746EAB00828B0D /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		79EAF3E321746FD500828B0D /* MainMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuButton.swift; sourceTree = "<group>"; };
 		8A0442A81ECB1D0B000DE269 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = "../../Library/Developer/Xcode/DerivedData/iosu-gddpvylvaevfhyenmhqlpckshyiw/Build/Products/Debug-iphoneos/SQLite.swift/SQLite.framework"; sourceTree = "<group>"; };
 		8A0442AF1ECB2227000DE269 /* UIBezierPath+Length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Length.h"; sourceTree = "<group>"; };
 		8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Length.m"; sourceTree = "<group>"; };
@@ -914,6 +918,8 @@
 				79EAF3CD21738B4100828B0D /* SongSelectionViewController.swift */,
 				79EAF3D121738D0D00828B0D /* SongSelectionCell.swift */,
 				79EAF3D221738D0D00828B0D /* SongSelectionCell.xib */,
+				79EAF3E121746EAB00828B0D /* MainMenuViewController.swift */,
+				79EAF3E321746FD500828B0D /* MainMenuButton.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1135,12 +1141,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-iosu/Pods-iosu-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
 				"${BUILT_PRODUCTS_DIR}/SpriteKitEasingSwift/SpriteKitEasingSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
 				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpriteKitEasingSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
@@ -1210,6 +1218,7 @@
 				79EAF3D321738D0D00828B0D /* SongSelectionCell.swift in Sources */,
 				8ADC1E781ECB12A900E0E9AB /* SBMoveY.swift in Sources */,
 				8ADC1E571ECB0F2800E0E9AB /* RendererEnums.swift in Sources */,
+				79EAF3E221746EAB00828B0D /* MainMenuViewController.swift in Sources */,
 				8ADC1E9D1ECB163300E0E9AB /* BGMusicPlayer.swift in Sources */,
 				79EAF3CE21738B4100828B0D /* SongSelectionViewController.swift in Sources */,
 				8ADC1E971ECB15D300E0E9AB /* AlertView.swift in Sources */,
@@ -1242,6 +1251,7 @@
 				8ADC1E371ECB0BF600E0E9AB /* BeatmapEnums.swift in Sources */,
 				8A0442B31ECB2227000DE269 /* UIBezierPath+Length.m in Sources */,
 				8ADC1E441ECB0D3400E0E9AB /* SliderBall.swift in Sources */,
+				79EAF3E421746FD500828B0D /* MainMenuButton.swift in Sources */,
 				8AFC00DC1F051E6E0029DC9D /* SkinBuffer.swift in Sources */,
 				79EAF3D82173C3E300828B0D /* Settings.swift in Sources */,
 				8ADC1E7C1ECB12EF00E0E9AB /* SBVScale.swift in Sources */,
