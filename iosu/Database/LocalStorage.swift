@@ -146,7 +146,6 @@ class LocalStorage: NSObject {
                     continue
                 }
                 let song = existingSongs[folderName] ?? SongInfo(context: context)
-                song.name = folderName
                 song.folderName = folderName
                 for subentry in contentsOfBMPath {
                     let url = songFolderURL.appendingPathComponent(subentry)
@@ -158,6 +157,7 @@ class LocalStorage: NSObject {
                         beatmapFile.fileName = subentry
                         beatmapFile.song = song
                         beatmapFile.difficulty = beatmap.difficulty?.overallDifficulty ?? 0.0
+                        beatmapFile.version = beatmap.meta?.version
                         
                         if song.backgroundImageFilename == nil {
                             song.backgroundImageFilename = beatmap.bgimg
@@ -172,6 +172,10 @@ class LocalStorage: NSObject {
                         if song.audioFilename == nil {
                             song.audioFilename = beatmap.audiofile
                         }
+                        if song.name == nil {
+                            song.name = beatmap.meta?.title
+                            song.author = beatmap.meta?.artist
+                        }
                     } else if url.pathExtension == "osb" {
                         let storyboardFile = StoryboardFile(context: context)
                         storyboardFile.fileName = subentry
@@ -181,6 +185,9 @@ class LocalStorage: NSObject {
                 if (song.files?.count ?? 0) == 0 {
                     context.delete(song)
                 } else {
+                    if song.name == nil {
+                        song.name = folderName
+                    }
                     existingSongs[folderName] = song
                 }
             }

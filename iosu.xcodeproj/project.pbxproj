@@ -19,6 +19,7 @@
 		79EAF3D82173C3E300828B0D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3D72173C3E300828B0D /* Settings.swift */; };
 		79EAF3DA2173C9CF00828B0D /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3D92173C9CF00828B0D /* SoundPlayer.swift */; };
 		79EAF3DE2173CDE700828B0D /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3DD2173CDE700828B0D /* MusicPlayer.swift */; };
+		79EAF3E021746AD000828B0D /* BeatmapMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EAF3DF21746AD000828B0D /* BeatmapMeta.swift */; };
 		8A0442B31ECB2227000DE269 /* UIBezierPath+Length.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */; };
 		8A1ACE721EFAB529000EBC14 /* PlaySoundFileNamedExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE711EFAB529000EBC14 /* PlaySoundFileNamedExt.swift */; };
 		8A1ACE741EFAB985000EBC14 /* BundleAudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1ACE731EFAB985000EBC14 /* BundleAudioBuffer.swift */; };
@@ -164,6 +165,7 @@
 		79EAF3D72173C3E300828B0D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		79EAF3D92173C9CF00828B0D /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		79EAF3DD2173CDE700828B0D /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		79EAF3DF21746AD000828B0D /* BeatmapMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapMeta.swift; sourceTree = "<group>"; };
 		8A0442A81ECB1D0B000DE269 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = "../../Library/Developer/Xcode/DerivedData/iosu-gddpvylvaevfhyenmhqlpckshyiw/Build/Products/Debug-iphoneos/SQLite.swift/SQLite.framework"; sourceTree = "<group>"; };
 		8A0442AF1ECB2227000DE269 /* UIBezierPath+Length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Length.h"; sourceTree = "<group>"; };
 		8A0442B01ECB2227000DE269 /* UIBezierPath+Length.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Length.m"; sourceTree = "<group>"; };
@@ -776,6 +778,7 @@
 				8ADC1E341ECB0BA900E0E9AB /* BGVideo.swift */,
 				8ADC1E911ECB155400E0E9AB /* Difficulty.swift */,
 				8ADC1E321ECB0B7A00E0E9AB /* TimingPoint.swift */,
+				79EAF3DF21746AD000828B0D /* BeatmapMeta.swift */,
 			);
 			name = Beatmap;
 			sourceTree = "<group>";
@@ -1195,6 +1198,7 @@
 				8ADC1E481ECB0D7200E0E9AB /* HitObjectEnums.swift in Sources */,
 				8ADC1E721ECB122000E0E9AB /* SBMove.swift in Sources */,
 				8ADC1E761ECB128400E0E9AB /* SBMoveX.swift in Sources */,
+				79EAF3E021746AD000828B0D /* BeatmapMeta.swift in Sources */,
 				79EAF3CC2173880600828B0D /* SongInfo+Extensions.swift in Sources */,
 				8ADC1E5F1ECB104900E0E9AB /* BasicImage.swift in Sources */,
 				79EAF3C4217387B900828B0D /* UIColor+Extensions.swift in Sources */,

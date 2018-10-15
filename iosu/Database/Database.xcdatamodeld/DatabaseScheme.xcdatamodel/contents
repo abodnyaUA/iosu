@@ -3,6 +3,7 @@
     <entity name="BeatmapFile" representedClassName="BeatmapFile" syncable="YES" codeGenerationType="class">
         <attribute name="difficulty" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SongInfo" inverseName="files" inverseEntity="SongInfo" syncable="YES"/>
     </entity>
     <entity name="SongInfo" representedClassName="SongInfo" syncable="YES" codeGenerationType="class">
@@ -24,6 +25,6 @@
     <elements>
         <element name="SongInfo" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="StoryboardFile" positionX="-54" positionY="-9" width="128" height="75"/>
-        <element name="BeatmapFile" positionX="-36" positionY="9" width="128" height="90"/>
+        <element name="BeatmapFile" positionX="-36" positionY="9" width="128" height="105"/>
     </elements>
 </model>

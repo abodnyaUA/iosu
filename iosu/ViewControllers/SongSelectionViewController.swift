@@ -179,11 +179,15 @@ extension SongSelectionViewController: UITableViewDataSource {
         switch item {
         case .song:
             cell.backgroundColorView.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-            cell.difficultyLabel.text = nil
+            if let author = songInfo.author {
+                cell.difficultyLabel.text = "Author: \(author)"
+            } else {
+                cell.difficultyLabel.text = nil
+            }
         case .file(let file):
             cell.backgroundColorView.backgroundColor = selectedFileName == file.fileName ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
             textColor = selectedFileName == file.fileName ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            cell.difficultyLabel.text = "Difficulty: \(file.difficulty)"
+            cell.difficultyLabel.text = file.version ?? "Difficulty: \(file.difficulty)"
         }
         
         cell.nameLabel.textColor = textColor

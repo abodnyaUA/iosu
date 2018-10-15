@@ -9,35 +9,37 @@
 import Foundation
 import UIKit
 
-class Beatmap{
+class Beatmap {
     
-    open var bgimg:String = ""
-    open var audiofile:String = ""
-    open var difficulty:BMDifficulty?
-    open var timingpoints:[TimingPoint] = []
-    open var colors:[UIColor] = []
-    open var hitobjects:[HitObject] = []
-    open var sampleSet:SampleSet = .auto //Set of audios
-    open var bgvideos:[BGVideo]=[]
-    open var widesb=false
+    private(set) var meta: BeatmapMeta?
+    private(set) var bgimg: String = ""
+    private(set) var audiofile: String = ""
+    private(set) var difficulty: BMDifficulty?
+    private(set) var timingpoints: [TimingPoint] = []
+    private(set) var colors: [UIColor] = []
+    private(set) var hitobjects: [HitObject] = []
+    private(set) var sampleSet: SampleSet = .auto //Set of audios
+    private(set) var bgvideos: [BGVideo] = []
+    private(set) var widesb = false
+    
     //For sliders
-    open var bordercolor = UIColor.white
-    open var trackcolor = UIColor.clear
-    open var trackoverride = false
+    private(set) var bordercolor = UIColor.white
+    private(set) var trackcolor = UIColor.clear
+    private(set) var trackoverride = false
     
     init(file:String) throws {
         debugPrint("full path: \(file)")
-        let readFile=FileHandle(forReadingAtPath: file)
-        if readFile===nil{
+        let readFile = FileHandle(forReadingAtPath: file)
+        if readFile === nil {
             throw BeatmapError.fileNotFound
         }
-        let bmData=readFile?.readDataToEndOfFile()
-        let bmString=String(data: bmData!, encoding: .utf8)
-        let rawlines=bmString?.components(separatedBy: CharacterSet.newlines)
-        if rawlines?.count==0{
+        let bmData = readFile?.readDataToEndOfFile()
+        let bmString = String(data: bmData!, encoding: .utf8)
+        let rawlines = bmString?.components(separatedBy: CharacterSet.newlines)
+        if rawlines?.count == 0 {
             throw BeatmapError.illegalFormat
         }
-        var lines=ArraySlice<String>()
+        var lines = ArraySlice<String>()
         for line in rawlines! {
             if line != "" {
                 if !line.hasPrefix("//"){
@@ -47,11 +49,14 @@ class Beatmap{
         }
         var index:Int
         index = -1
-        for line in lines{
+        for line in lines {
             index += 1
             switch line {
             case "[General]":
                 try parseGeneral(lines.suffix(from: index+1))
+                break
+            case "[Metadata]":
+                parseMeta(lines.suffix(from: index+1))
                 break
             case "[Difficulty]":
                 parseDifficulty(lines.suffix(from: index+1))
@@ -136,14 +141,55 @@ class Beatmap{
         }
     }
     
-    func parseDifficulty(_ lines:ArraySlice<String>) -> Void {
+    private func parseMeta(_ lines:ArraySlice<String>) -> Void {
+        var beatmapId: String?
+        var beatmapSetId: String?
+        var title: String?
+        var artist: String?
+        var titleUnicode: String?
+        var artistUnicode: String?
+        var creator: String?
+        var version: String?
+        
+        for line in lines {
+            if line.hasPrefix("[") {
+                break
+            }
+            let splitted = line.components(separatedBy: ":")
+            if splitted.count != 2 {
+                continue
+            }
+            let value = splitted[1]
+            switch splitted[0] {
+            case "Title": title = value
+            case "TitleUnicode": titleUnicode = value
+            case "Artist": artist = value
+            case "ArtistUnicode": artistUnicode = value
+            case "Creator": creator = value
+            case "Version": version = value
+            case "BeatmapID": beatmapId = value
+            case "BeatmapSetID": beatmapSetId = value
+            default: break
+            }
+        }
+        meta = BeatmapMeta(
+            beatmapId: beatmapId,
+            beatmapSetId: beatmapSetId,
+            title: titleUnicode ?? title,
+            artist: artistUnicode ?? artist,
+            creator: creator,
+            version: version
+        )
+    }
+    
+    private func parseDifficulty(_ lines:ArraySlice<String>) -> Void {
         var hp:Double = -1
         var cs:Double = -1
         var od:Double = 5
         var ar:Double = -1
         var sm:Double = 1.4
         var st:Double = 1
-        for line in lines{
+        for line in lines {
             if line.hasPrefix("["){
                 if(hp == -1){
                     hp=od

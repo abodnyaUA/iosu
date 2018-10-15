@@ -354,7 +354,7 @@ class GamePlayScene: SKScene {
         }
         if BGMusicPlayer.instance.state == .stopped {
             destroyNode(self)
-            bm.hitobjects.removeAll()
+            //bm.hitobjects.removeAll()
             actions?.destroy()
             actions = nil
             SkinBuffer.clean()
