@@ -80,6 +80,24 @@ class Beatmap {
         bgvideos.sort(by: {(v1,v2)->Bool in
             return v1.time<v2.time
         })
+        if colors.count == 0 {
+            colors = [
+                UIColor(hex: "FFFF71"),
+                UIColor(hex: "8AFF15"),
+                UIColor(hex: "FF91FF"),
+                UIColor(hex: "4481FF"),
+                UIColor(hex: "000000"),
+                UIColor(hex: "5AFAE2"),
+                UIColor(hex: "7E8EB8"),
+                UIColor(hex: "0ECFBC"),
+                UIColor(hex: "FBF3D2"),
+                UIColor(hex: "FF6726"),
+                UIColor(hex: "FF0080"),
+                UIColor(hex: "FFFF00"),
+                UIColor(hex: "C0C0C0"),
+                UIColor(hex: "00FFFF"),
+            ]
+        }
     }
     
     func getTimingPoint(_ offset:Int) -> TimingPoint {
